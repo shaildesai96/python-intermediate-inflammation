@@ -8,7 +8,6 @@ jobs:
 
   build:
 
-    # we can also specify the OS to run tests on
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
