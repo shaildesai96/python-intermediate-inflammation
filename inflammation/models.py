@@ -76,6 +76,72 @@ def patient_normalise(data):
     normalised[normalised < 0] = 0
     return normalised
 
+
 # TODO(lesson-design) Add Patient class
+class Observation:
+    def __init__(self, day, value):
+        self.day = day
+        self.value = value
+
+    def __str__(self):
+        return str(self.value)
+
+
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return self.name
+
+
+class Patient(Person):
+    """A patient in an inflammation study."""
+
+    def __init__(self, name, observations=None):
+        super().__init__(name)
+
+        self.observations = []
+        ### MODIFIED START ###
+        if observations is not None:
+            self.observations = observations
+        ### MODIFIED END ###
+
+    def add_observation(self, value, day=None):
+        if day is None:
+            try:
+                day = self.observations[-1]['day'] + 1
+
+            except IndexError:
+                day = 0
+
+        new_observation = Observation(day, value)
+
+        self.observations.append(new_observation)
+        return new_observation
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def last_observation(self):
+        return self.observations[-1]
+
+
 # TODO(lesson-design) Implement data persistence
 # TODO(lesson-design) Add Doctor class
+class Doctor(Person):
+    """A doctor in an inflammation study"""
+    def __init__(self, name):
+        super().__init__(name)
+        self.observations = []
+        self.list_of_patients = []
+
+    def add_patient(self, patient=Patient):
+        if patient is not Patient:
+            raise TypeError("patient is not of Class PAtient")
+
+        new_patient = Patient
+
+        self.list.append(new_patient)
+        return new_patient
